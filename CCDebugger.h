@@ -33,12 +33,13 @@ uint8_t instr[16];
 #define I_GET_BM        14
 #define I_BURST_WRITE   15
 
+#define PIN_RST 24
+#define PIN_DC  27
+#define PIN_DD  28
+
 /**
  * Local properties
  */
-int pinRST = 24;
-int pinDC = 28;
-int pinDD = 29;
 uint8_t errorFlag = 0;
 uint8_t ddIsOutput = false;
 uint8_t inDebugMode = false;
@@ -52,7 +53,7 @@ uint8_t cc_active = false;
 /**
  * Initialize debugger
  */
-int cc_init(int pinRST, int pinDC, int pinDD);
+int cc_init();
 
 /**
  * Return error code

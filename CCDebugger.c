@@ -25,23 +25,19 @@
 
 #include "CCDebugger.h"
 
-int cc_init(int pRST, int pDC, int pDD) {
+int cc_init() {
     if (wiringPiSetup() == -1) {
         printf("No wiring pi detected.\n");
         return 0;
     }
 
-    pinRST = pRST;
-    pinDC = pDC;
-    pinDD = pDD;
-
     // Prepare CC Pins
-    pinMode(pinDC, OUTPUT);
-    pinMode(pinDD, OUTPUT);
-    pinMode(pinRST, OUTPUT);
-    digitalWrite(pinDC, LOW);
-    digitalWrite(pinDD, LOW);
-    digitalWrite(pinRST, LOW);
+    pinMode(PIN_DC, OUTPUT);
+    pinMode(PIN_DD, OUTPUT);
+    pinMode(PIN_RST, OUTPUT);
+    digitalWrite(PIN_DC, LOW);
+    digitalWrite(PIN_DD, LOW);
+    digitalWrite(PIN_RST, LOW);
 
     // Prepare default direction
     cc_setDDDirection(INPUT);
@@ -79,12 +75,12 @@ void cc_setActive(uint8_t on) {
 
     if (on) {
         // Prepare CC Pins
-        pinMode(pinDC, OUTPUT);
-        pinMode(pinDD, OUTPUT);
-        pinMode(pinRST, OUTPUT);
-        digitalWrite(pinDC, LOW);
-        digitalWrite(pinDD, LOW);
-        digitalWrite(pinRST, LOW);
+        pinMode(PIN_DC, OUTPUT);
+        pinMode(PIN_DD, OUTPUT);
+        pinMode(PIN_RST, OUTPUT);
+        digitalWrite(PIN_DC, LOW);
+        digitalWrite(PIN_DD, LOW);
+        digitalWrite(PIN_RST, LOW);
 
         // Default direction is INPUT
         cc_setDDDirection(INPUT);
@@ -94,12 +90,12 @@ void cc_setActive(uint8_t on) {
             cc_exit();
 
         // Put everything in inactive mode
-        pinMode(pinDC, INPUT);
-        pinMode(pinDD, INPUT);
-        pinMode(pinRST, INPUT);
-        digitalWrite(pinDC, LOW);
-        digitalWrite(pinDD, LOW);
-        digitalWrite(pinRST, LOW);
+        pinMode(PIN_DC, INPUT);
+        pinMode(PIN_DD, INPUT);
+        pinMode(PIN_RST, INPUT);
+        digitalWrite(PIN_DC, LOW);
+        digitalWrite(PIN_DD, LOW);
+        digitalWrite(PIN_RST, LOW);
     }
 }
 
@@ -113,17 +109,17 @@ uint8_t cc_enter() {
     errorFlag = CC_ERROR_NONE;
 
     // Enter debug mode
-    digitalWrite(pinRST, LOW);
+    digitalWrite(PIN_RST, LOW);
     cc_delay(200);
-    digitalWrite(pinDC, HIGH);
+    digitalWrite(PIN_DC, HIGH);
     cc_delay(3);
-    digitalWrite(pinDC, LOW);
+    digitalWrite(PIN_DC, LOW);
     cc_delay(3);
-    digitalWrite(pinDC, HIGH);
+    digitalWrite(PIN_DC, HIGH);
     cc_delay(3);
-    digitalWrite(pinDC, LOW);
+    digitalWrite(PIN_DC, LOW);
     cc_delay(4);
-    digitalWrite(pinRST, HIGH);
+    digitalWrite(PIN_RST, HIGH);
     cc_delay(200);
 
     // We are now in debug mode
@@ -471,19 +467,19 @@ uint8_t cc_write(uint8_t data) {
     for (cnt = 8; cnt; cnt--) {
         // First put data bit on bus
         if (data & 0x80)
-            digitalWrite(pinDD, HIGH);
+            digitalWrite(PIN_DD, HIGH);
         else
-            digitalWrite(pinDD, LOW);
+            digitalWrite(PIN_DD, LOW);
 
         // Place clock on high (other end reads data)
-        digitalWrite(pinDC, HIGH);
+        digitalWrite(PIN_DC, HIGH);
 
         // Shift & Delay
         data <<= 1;
         cc_delay(2);
 
         // Place clock down
-        digitalWrite(pinDC, LOW);
+        digitalWrite(PIN_DC, LOW);
         cc_delay(2);
     }
 
@@ -510,12 +506,12 @@ uint8_t cc_switchRead(uint8_t maxWaitCycles) {
     cc_delay(2);
 
     // Wait for DD to go LOW (Chip is READY)
-    while (digitalRead(pinDD) == HIGH) {
+    while (digitalRead(PIN_DD) == HIGH) {
         // Do 8 clock cycles
         for (cnt = 8; cnt; cnt--) {
-            digitalWrite(pinDC, HIGH);
+            digitalWrite(PIN_DC, HIGH);
             cc_delay(2);
-            digitalWrite(pinDC, LOW);
+            digitalWrite(PIN_DC, LOW);
             cc_delay(2);
         }
 
@@ -558,15 +554,15 @@ uint8_t cc_read() {
 
     // Send 8 clock pulses if we are HIGH
     for (cnt = 8; cnt; cnt--) {
-        digitalWrite(pinDC, HIGH);
+        digitalWrite(PIN_DC, HIGH);
         cc_delay(2);
 
         // Shift and read
         data <<= 1;
-        if (digitalRead(pinDD) == HIGH)
+        if (digitalRead(PIN_DD) == HIGH)
             data |= 0x01;
 
-        digitalWrite(pinDC, LOW);
+        digitalWrite(PIN_DC, LOW);
         cc_delay(2);
     }
 
@@ -593,12 +589,12 @@ void cc_setDDDirection(uint8_t direction) {
 
     // Handle new direction
     if (ddIsOutput) {
-        digitalWrite(pinDD, LOW); // Disable pull-up
-        pinMode(pinDD, OUTPUT);   // Enable output
-        digitalWrite(pinDD, LOW); // Switch to low
+        digitalWrite(PIN_DD, LOW); // Disable pull-up
+        pinMode(PIN_DD, OUTPUT);   // Enable output
+        digitalWrite(PIN_DD, LOW); // Switch to low
     } else {
-        digitalWrite(pinDD, LOW); // Disable pull-up
-        pinMode(pinDD, INPUT);    // Disable output
-        digitalWrite(pinDD, LOW); // Don't use output pull-up
+        digitalWrite(PIN_DD, LOW); // Disable pull-up
+        pinMode(PIN_DD, INPUT);    // Disable output
+        digitalWrite(PIN_DD, LOW); // Don't use output pull-up
     }
 }

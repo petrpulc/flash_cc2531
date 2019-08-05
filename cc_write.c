@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
     // on initialise les ports GPIO et le debugger
-    cc_init(24, 27, 28);
+    cc_init();
     // entrée en mode debug
     cc_enter();
     // envoi de la commande getChipID :
