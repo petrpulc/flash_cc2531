@@ -63,7 +63,7 @@ uint8_t cc_error();
 /**
  * Activate/Deactivate debugger
  */
-void cc_setActive(uint8_t on);
+void cc_setActive(uint8_t active);
 
 /**
  * Enter debug mode

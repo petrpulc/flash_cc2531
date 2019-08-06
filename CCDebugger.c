@@ -89,15 +89,15 @@ uint8_t cc_error() {
     return errorFlag;
 }
 
-void cc_setActive(uint8_t on) {
+void cc_setActive(uint8_t active) {
     // Reset error flag
     errorFlag = CC_ERROR_NONE;
 
-    // Continue only if active
-    if (on == cc_active) return;
-    cc_active = on;
+    // Continue only if change requested
+    if (active == cc_active) return;
+    cc_active = active;
 
-    if (on) {
+    if (active) {
         // Prepare CC Pins
         pinMode(PIN_DC, OUTPUT);
         pinMode(PIN_DD, OUTPUT);
