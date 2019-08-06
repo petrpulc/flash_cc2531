@@ -143,11 +143,9 @@ uint8_t cc_enter() {
 uint8_t cc_exit() {
     if (!isDebugMode()) return 0;
 
-    uint8_t bAns;
-
     cc_write(instr[I_RESUME]); // RESUME
     cc_switchRead(250);
-    bAns = cc_read(); // debug status
+    cc_read(); // debug status
     cc_switchWrite();
 
     inDebugMode = 0;
