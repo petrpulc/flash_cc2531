@@ -53,7 +53,7 @@ uint8_t cc_active = false;
 /**
  * Initialize debugger
  */
-int cc_init();
+uint8_t cc_init();
 
 /**
  * Return error code
@@ -162,7 +162,7 @@ uint8_t cc_switchRead(uint8_t maxWaitCycles);
 /**
  * Switch to write mode
  */
-uint8_t cc_switchWrite();
+void cc_switchWrite();
 
 /**
  * Read a uint8_t from the debugger

@@ -25,7 +25,7 @@
 
 #include "CCDebugger.h"
 
-int cc_init() {
+uint8_t cc_init() {
     if (wiringPiSetup() == -1) {
         printf("No wiring pi detected.\n");
         return 0;
@@ -59,6 +59,7 @@ int cc_init() {
 
     // We are active by default
     cc_active = true;
+    return 1;
 };
 
 uint8_t cc_error() {
@@ -126,7 +127,7 @@ uint8_t cc_enter() {
     inDebugMode = 1;
 
     // Success
-    return 0;
+    return 1;
 };
 
 uint8_t cc_exit() {
@@ -149,7 +150,7 @@ uint8_t cc_exit() {
 
     inDebugMode = 0;
 
-    return 0;
+    return 1;
 }
 
 uint8_t cc_exec(uint8_t oc0) {
@@ -235,8 +236,8 @@ uint8_t cc_execi(uint8_t oc0, unsigned short c0) {
 
     cc_write(instr[I_DEBUG_INSTR_3]); // DEBUG_INSTR + 3b
     cc_write(oc0);
-    cc_write((c0 >> 8) & 0xFF);
-    cc_write(c0 & 0xFF);
+    cc_write((uint8_t) ((c0 >> 8) & 0xFF));
+    cc_write((uint8_t) (c0 & 0xFF));
     cc_switchRead(250);
     bAns = cc_read(); // Accumulator
     cc_switchWrite();
@@ -483,7 +484,7 @@ uint8_t cc_write(uint8_t data) {
         cc_delay(2);
     }
 
-    return 0;
+    return 1;
 }
 
 uint8_t cc_switchRead(uint8_t maxWaitCycles) {
@@ -532,12 +533,11 @@ uint8_t cc_switchRead(uint8_t maxWaitCycles) {
     // Wait t(sample_wait)
     if (didWait) cc_delay(2);
 
-    return 0;
+    return 1;
 }
 
-uint8_t cc_switchWrite() {
+void cc_switchWrite() {
     cc_setDDDirection(OUTPUT);
-    return 0;
 }
 
 uint8_t cc_read() {
