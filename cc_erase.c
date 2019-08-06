@@ -23,19 +23,18 @@
 
 #include "CCDebugger.h"
 
-int main()
-{
-  // initialize GPIO and debugger
-  cc_init(24,27,28);
-  // enter debug mode
-  cc_enter();
-  // get ChipID :
-  uint16_t res;
-  res = cc_getChipID();
-  printf("  ID = %04x.\n",res);
-  // erase flash
-  res = cc_chipErase();
-  printf("  erase result = %04x.\n",res);
-  cc_setActive(false);
+int main() {
+    // initialize GPIO and debugger
+    cc_init(24, 27, 28);
+    // enter debug mode
+    cc_enter();
+    // get ChipID :
+    uint16_t res;
+    res = cc_getChipID();
+    printf("  ID = %04x.\n", res);
+    // erase flash
+    res = cc_chipErase();
+    printf("  erase result = %04x.\n", res);
+    cc_setActive(false);
 
 }
