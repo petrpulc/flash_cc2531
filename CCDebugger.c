@@ -48,6 +48,15 @@ uint8_t isDebugMode() {
     return 1;
 }
 
+void setAllPinMode(uint8_t mode) {
+    pinMode(PIN_DC, mode);
+    pinMode(PIN_DD, mode);
+    pinMode(PIN_RST, mode);
+    digitalWrite(PIN_DC, LOW);
+    digitalWrite(PIN_DD, LOW);
+    digitalWrite(PIN_RST, LOW);
+}
+
 uint8_t cc_init() {
     if (wiringPiSetup() == -1) {
         printf("No wiring pi detected.\n");
@@ -55,12 +64,7 @@ uint8_t cc_init() {
     }
 
     // Prepare CC Pins
-    pinMode(PIN_DC, OUTPUT);
-    pinMode(PIN_DD, OUTPUT);
-    pinMode(PIN_RST, OUTPUT);
-    digitalWrite(PIN_DC, LOW);
-    digitalWrite(PIN_DD, LOW);
-    digitalWrite(PIN_RST, LOW);
+    setAllPinMode(OUTPUT);
 
     // Prepare default direction
     cc_setDDDirection(INPUT);
@@ -99,12 +103,7 @@ void cc_setActive(uint8_t active) {
 
     if (active) {
         // Prepare CC Pins
-        pinMode(PIN_DC, OUTPUT);
-        pinMode(PIN_DD, OUTPUT);
-        pinMode(PIN_RST, OUTPUT);
-        digitalWrite(PIN_DC, LOW);
-        digitalWrite(PIN_DD, LOW);
-        digitalWrite(PIN_RST, LOW);
+        setAllPinMode(OUTPUT);
 
         // Default direction is INPUT
         cc_setDDDirection(INPUT);
@@ -114,12 +113,7 @@ void cc_setActive(uint8_t active) {
             cc_exit();
 
         // Put everything in inactive mode
-        pinMode(PIN_DC, INPUT);
-        pinMode(PIN_DD, INPUT);
-        pinMode(PIN_RST, INPUT);
-        digitalWrite(PIN_DC, LOW);
-        digitalWrite(PIN_DD, LOW);
-        digitalWrite(PIN_RST, LOW);
+        setAllPinMode(INPUT);
     }
 }
 
