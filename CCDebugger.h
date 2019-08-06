@@ -93,17 +93,17 @@ uint8_t cc_exec3(uint8_t oc0, uint8_t oc1, uint8_t oc2);
 /**
  * Invoke a debug instruction with 1 opcode + 16-bit immediate
  */
-uint8_t cc_execi(uint8_t oc0, unsigned short c0);
+uint8_t cc_execi(uint8_t oc0, uint16_t c0);
 
 /**
  * Return chip ID
  */
-unsigned short cc_getChipID();
+uint16_t cc_getChipID();
 
 /**
  * Return PC
  */
-unsigned short cc_getPC();
+uint16_t cc_getPC();
 
 /**
  * Return debug status

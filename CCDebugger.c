@@ -198,7 +198,7 @@ uint8_t cc_exec3(uint8_t oc0, uint8_t oc1, uint8_t oc2) {
     return bAns;
 }
 
-uint8_t cc_execi(uint8_t oc0, unsigned short c0) {
+uint8_t cc_execi(uint8_t oc0, uint16_t c0) {
     if (!isDebugMode()) return 0;
 
     uint8_t bAns;
@@ -214,10 +214,10 @@ uint8_t cc_execi(uint8_t oc0, unsigned short c0) {
     return bAns;
 }
 
-unsigned short cc_getChipID() {
+uint16_t cc_getChipID() {
     if (!isDebugMode()) return 0;
 
-    unsigned short bAns;
+    uint16_t bAns;
     uint8_t bRes;
 
     cc_write(instr[I_GET_CHIP_ID]); // GET_CHIP_ID
@@ -232,10 +232,10 @@ unsigned short cc_getChipID() {
     return bAns;
 }
 
-unsigned short cc_getPC() {
+uint16_t cc_getPC() {
     if (!isDebugMode()) return 0;
 
-    unsigned short bAns;
+    uint16_t bAns;
     uint8_t bRes;
 
     cc_write(instr[I_GET_PC]); // GET_PC
