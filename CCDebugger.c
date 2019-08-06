@@ -569,7 +569,7 @@ uint8_t cc_read() {
     return data;
 }
 
-uint8_t cc_updateInstructionTable(uint8_t newTable[16]) {
+uint8_t cc_updateInstructionTable(const uint8_t newTable[16]) {
     // Copy table entries
     for (uint8_t i = 0; i < 16; i++)
         instr[i] = newTable[i];

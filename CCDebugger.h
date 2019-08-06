@@ -172,7 +172,7 @@ uint8_t cc_read();
 /**
  * Update the debug instruction table
  */
-uint8_t cc_updateInstructionTable(uint8_t newTable[16]);
+uint8_t cc_updateInstructionTable(const uint8_t newTable[16]);
 
 /**
  * Get the instruction table version
