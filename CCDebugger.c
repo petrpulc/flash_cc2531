@@ -25,6 +25,29 @@
 
 #include "CCDebugger.h"
 
+uint8_t isActive() {
+    if (!cc_active) {
+        errorFlag = CC_ERROR_NOT_ACTIVE;
+        return 0;
+    }
+
+    return 1;
+}
+
+uint8_t isDebugMode() {
+    if (!cc_active) {
+        errorFlag = CC_ERROR_NOT_ACTIVE;
+        return 0;
+    }
+
+    if (!inDebugMode) {
+        errorFlag = CC_ERROR_NOT_DEBUGGING;
+        return 0;
+    }
+
+    return 1;
+}
+
 uint8_t cc_init() {
     if (wiringPiSetup() == -1) {
         printf("No wiring pi detected.\n");
@@ -101,10 +124,7 @@ void cc_setActive(uint8_t on) {
 }
 
 uint8_t cc_enter() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
+    if (!isActive()) return 0;
 
     // Reset error flag
     errorFlag = CC_ERROR_NONE;
@@ -131,15 +151,7 @@ uint8_t cc_enter() {
 };
 
 uint8_t cc_exit() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -154,15 +166,7 @@ uint8_t cc_exit() {
 }
 
 uint8_t cc_exec(uint8_t oc0) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -176,15 +180,7 @@ uint8_t cc_exec(uint8_t oc0) {
 }
 
 uint8_t cc_exec2(uint8_t oc0, uint8_t oc1) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -199,14 +195,7 @@ uint8_t cc_exec2(uint8_t oc0, uint8_t oc1) {
 }
 
 uint8_t cc_exec3(uint8_t oc0, uint8_t oc1, uint8_t oc2) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -222,15 +211,7 @@ uint8_t cc_exec3(uint8_t oc0, uint8_t oc1, uint8_t oc2) {
 }
 
 uint8_t cc_execi(uint8_t oc0, unsigned short c0) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -246,15 +227,7 @@ uint8_t cc_execi(uint8_t oc0, unsigned short c0) {
 }
 
 unsigned short cc_getChipID() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     unsigned short bAns;
     uint8_t bRes;
@@ -272,15 +245,7 @@ unsigned short cc_getChipID() {
 }
 
 unsigned short cc_getPC() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     unsigned short bAns;
     uint8_t bRes;
@@ -297,15 +262,7 @@ unsigned short cc_getPC() {
 }
 
 uint8_t cc_getStatus() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -318,14 +275,7 @@ uint8_t cc_getStatus() {
 }
 
 uint8_t cc_resume() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -338,14 +288,7 @@ uint8_t cc_resume() {
 }
 
 uint8_t cc_halt() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -358,14 +301,7 @@ uint8_t cc_halt() {
 }
 
 uint8_t cc_step() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -378,15 +314,7 @@ uint8_t cc_step() {
 }
 
 uint8_t cc_getConfig() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -399,14 +327,7 @@ uint8_t cc_getConfig() {
 }
 
 uint8_t cc_setConfig(uint8_t config) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -420,14 +341,7 @@ uint8_t cc_setConfig(uint8_t config) {
 }
 
 uint8_t cc_chipErase() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    };
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t bAns;
 
@@ -449,15 +363,7 @@ void cc_delay(unsigned char d) {
 }
 
 uint8_t cc_write(uint8_t data) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t cnt;
 
@@ -488,14 +394,7 @@ uint8_t cc_write(uint8_t data) {
 }
 
 uint8_t cc_switchRead(uint8_t maxWaitCycles) {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
-    if (!inDebugMode) {
-        errorFlag = CC_ERROR_NOT_DEBUGGING;
-        return 0;
-    }
+    if (!isDebugMode()) return 0;
 
     uint8_t cnt;
     uint8_t didWait = 0;
@@ -541,10 +440,7 @@ void cc_switchWrite() {
 }
 
 uint8_t cc_read() {
-    if (!cc_active) {
-        errorFlag = CC_ERROR_NOT_ACTIVE;
-        return 0;
-    }
+    if (!isActive()) return 0;
 
     uint8_t cnt;
     uint8_t data = 0;
