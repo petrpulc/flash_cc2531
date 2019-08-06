@@ -584,17 +584,12 @@ uint8_t cc_getInstructionTableVersion() {
 
 void cc_setDDDirection(uint8_t direction) {
     // Switch direction if changed
-    if (direction == ddIsOutput) return;
-    ddIsOutput = direction;
+    if (direction == ddDirection) return;
 
     // Handle new direction
-    if (ddIsOutput) {
-        digitalWrite(PIN_DD, LOW); // Disable pull-up
-        pinMode(PIN_DD, OUTPUT);   // Enable output
-        digitalWrite(PIN_DD, LOW); // Switch to low
-    } else {
-        digitalWrite(PIN_DD, LOW); // Disable pull-up
-        pinMode(PIN_DD, INPUT);    // Disable output
-        digitalWrite(PIN_DD, LOW); // Don't use output pull-up
-    }
+    digitalWrite(PIN_DD, LOW); // Switch to low
+    pinMode(PIN_DD, direction);   // Set direction
+    digitalWrite(PIN_DD, LOW); // Switch to low
+
+    ddDirection = direction;
 }

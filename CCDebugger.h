@@ -41,7 +41,7 @@ uint8_t instr[16];
  * Local properties
  */
 uint8_t errorFlag = 0;
-uint8_t ddIsOutput = false;
+uint8_t ddDirection = 0;
 uint8_t inDebugMode = false;
 uint8_t cc_active = false;
 
