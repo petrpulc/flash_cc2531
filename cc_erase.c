@@ -15,10 +15,8 @@
 *************************************************************************/
 
 #include <wiringPi.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 #include <stdint.h>
 
 #include "CCDebugger.h"
