@@ -342,8 +342,8 @@ uint8_t cc_chipErase() {
 }
 
 
-void cc_delay(unsigned char d) {
-    volatile unsigned char i = 50 * d;
+void cc_delay(uint8_t d) {
+    volatile uint16_t i = (uint16_t) (50 * d);
     while (i--);
 //    struct timespec tp={0,0};
 //    tp.tv_nsec=40*d;

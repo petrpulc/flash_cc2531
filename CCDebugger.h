@@ -147,7 +147,7 @@ uint8_t cc_chipErase();
 /**
  * Delay a particular number of cycles
  */
-void cc_delay(unsigned char d);
+void cc_delay(uint8_t d);
 
 /**
  * Write a uint8_t to the debugger
